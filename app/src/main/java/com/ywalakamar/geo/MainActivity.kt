@@ -45,19 +45,11 @@ class MainActivity : AppCompatActivity() {
 
         /*Setting listeners*/
         trueButton.setOnClickListener { view:View->
-            Toast.makeText(
-                this,
-                R.string.correct_toast,
-                Toast.LENGTH_SHORT
-            ).show()
+            checkAnswer(true)
         }
 
         falseButton.setOnClickListener { view:View->
-            Toast.makeText(
-                this,
-                R.string.incorrect_toast,
-                Toast.LENGTH_SHORT
-            ).show()
+            checkAnswer(false)
         }
 
         nextButton.setOnClickListener { view:View->
@@ -68,10 +60,24 @@ class MainActivity : AppCompatActivity() {
         val questionId=QuestionBank[currentIndex].id
         questionTextView.setText(questionId)
 
-
     }
+
     private fun updateQuestion(){
         val questionId=QuestionBank[currentIndex].id
         questionTextView.setText(questionId)
+    }
+
+    private fun checkAnswer(userAnswer: Boolean){
+        val correctAnswer=QuestionBank[currentIndex].answer
+        val feedback=if(userAnswer==correctAnswer){
+            R.string.correct_toast
+        }else{
+            R.string.incorrect_toast
+        }
+        Toast.makeText(
+            this,
+            feedback,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
