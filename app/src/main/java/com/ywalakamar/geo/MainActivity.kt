@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import com.ywalakamar.geo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,11 +29,19 @@ class MainActivity : AppCompatActivity() {
 
         /*Setting listeners*/
         trueButton.setOnClickListener { view:View->
-            //Do something in response to click
+            Toast.makeText(
+                this,
+                R.string.correct_toast,
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         falseButton.setOnClickListener { view:View->
-            //Do something in response to click
+            Toast.makeText(
+                this,
+                R.string.incorrect_toast,
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
