@@ -60,6 +60,17 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
 
+        nextButton.setOnClickListener { view:View->
+            currentIndex=(currentIndex+1)%QuestionBank.size
+            updateQuestion()
+        }
+
+        val questionId=QuestionBank[currentIndex].id
+        questionTextView.setText(questionId)
+
+
+    }
+    private fun updateQuestion(){
         val questionId=QuestionBank[currentIndex].id
         questionTextView.setText(questionId)
     }
