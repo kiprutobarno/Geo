@@ -1,27 +1,19 @@
 package com.ywalakamar.geo
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.ywalakamar.geo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var nextButton: Button
+    private lateinit var prevButton: Button
     private lateinit var questionTextView: TextView
 
-    private val QuestionBank=listOf(
+    private val questionBank=listOf(
         Question(R.string.question_australia, true),
         Question(R.string.question_oceans, true),
         Question(R.string.question_middle_east, false),
@@ -41,34 +33,41 @@ class MainActivity : AppCompatActivity() {
         trueButton=findViewById(R.id.true_button)
         falseButton=findViewById(R.id.false_button)
         nextButton=findViewById(R.id.next_button)
+        prevButton=findViewById(R.id.previous_button)
         questionTextView=findViewById(R.id.question_text_view)
 
         /*Setting listeners*/
-        trueButton.setOnClickListener { view:View->
+        trueButton.setOnClickListener {
             checkAnswer(true)
         }
 
-        falseButton.setOnClickListener { view:View->
+        falseButton.setOnClickListener {
             checkAnswer(false)
         }
 
-        nextButton.setOnClickListener { view:View->
-            currentIndex=(currentIndex+1)%QuestionBank.size
+        nextButton.setOnClickListener {
+            currentIndex=(currentIndex+1)%questionBank.size
             updateQuestion()
         }
 
-        val questionId=QuestionBank[currentIndex].id
+        prevButton.setOnClickListener {
+
+            currentIndex=(currentIndex+questionBank.size-1)%questionBank.size
+            updateQuestion()
+        }
+
+        val questionId=questionBank[currentIndex].id
         questionTextView.setText(questionId)
 
     }
 
     private fun updateQuestion(){
-        val questionId=QuestionBank[currentIndex].id
+        val questionId=questionBank[currentIndex].id
         questionTextView.setText(questionId)
     }
 
     private fun checkAnswer(userAnswer: Boolean){
-        val correctAnswer=QuestionBank[currentIndex].answer
+        val correctAnswer=questionBank[currentIndex].answer
         val feedback=if(userAnswer==correctAnswer){
             R.string.correct_toast
         }else{
