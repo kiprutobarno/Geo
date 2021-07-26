@@ -1,11 +1,11 @@
 package com.ywalakamar.geo
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     private var currentIndex=0
 
+    /*boolean array to keep track of answered questions*/
+    private val questionsAnswered = BooleanArray(questionBank.size)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,23 +54,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         prevButton.setOnClickListener {
-
             currentIndex=(currentIndex+questionBank.size-1)%questionBank.size
             updateQuestion()
         }
 
         val questionId=questionBank[currentIndex].id
         questionTextView.setText(questionId)
-
     }
 
     private fun updateQuestion(){
+        /*toggle button state based on question state(answered or not)*/
+        trueButton.isEnabled=!questionsAnswered[currentIndex]
+        falseButton.isEnabled=!questionsAnswered[currentIndex]
+
         val questionId=questionBank[currentIndex].id
         questionTextView.setText(questionId)
     }
 
     private fun checkAnswer(userAnswer: Boolean){
         val correctAnswer=questionBank[currentIndex].answer
+
+        /*specify that the question in this position has been answered*/
+        questionsAnswered[currentIndex]=true
+
+        /*disable buttons*/
+        trueButton.isEnabled=false
+        falseButton.isEnabled=false
+
         val feedback=if(userAnswer==correctAnswer){
             R.string.correct_toast
         }else{
