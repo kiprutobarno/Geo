@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     /*boolean array to keep track of answered questions*/
     private val questionsAnswered = BooleanArray(questionBank.size)
 
+    private var correctAnswers:Int=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -82,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         falseButton.isEnabled=false
 
         val feedback=if(userAnswer==correctAnswer){
+            correctAnswers++
             R.string.correct_toast
         }else{
             R.string.incorrect_toast
@@ -91,5 +94,14 @@ class MainActivity : AppCompatActivity() {
             feedback,
             Toast.LENGTH_SHORT
         ).show()
+
+        /*show score*/
+        calculateScore()
+    }
+
+    private fun calculateScore(){
+        val score:Int=correctAnswers*100/questionBank.size
+        val message=getString(R.string.score, score)
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

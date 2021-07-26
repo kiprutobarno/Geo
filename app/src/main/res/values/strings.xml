@@ -16,5 +16,6 @@
     <string name="incorrect_toast">Incorrect!</string>
     <string name="next_question">Next</string>
     <string name="previous_question">Prev</string>
+    <string name="score">Your score is %1$d%%</string>
     
 </resources>
